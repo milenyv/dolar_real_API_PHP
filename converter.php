@@ -27,6 +27,12 @@ function converterParaDolar($valor) {
     return $valor / $cotacaoDolar;
 }
 
+// Função para converter Real → Euro
+function converterParaEuro($valor) {
+    $cotacaoEuro = 6.10;
+    return $valor / $cotacaoEuro;
+}
+
 // Receber dados do formulário
 $valor = $_POST['valor'] ?? null;
 $moeda = $_POST['moeda'] ?? null;
@@ -46,8 +52,7 @@ switch ($moeda) {
         break;
 
     case 'eur':
-        $cotacaoEuro = 6.10;
-        $resultado = $valor / $cotacaoEuro;
+        $resultado = converterParaEuro($valor);
         $nomeMoeda = "Euro (EUR)";
         break;
 
