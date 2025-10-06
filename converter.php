@@ -1,19 +1,34 @@
 <?php
+// Função para validar entradas do usuário
+function validarEntradas($valor, $moeda) {
+    if ($valor === null || $valor === '' || !is_numeric($valor) || $valor <= 0) {
+        return "Por favor, insira um valor em reais válido.";
+    }
+
+    if ($moeda === null || $moeda === '') {
+        return "Por favor, selecione uma moeda para conversão.";
+    }
+
+    return true; // Tudo certo!
+}
+
 // Receber dados do formulário
 $valor = $_POST['valor'] ?? null;
 $moeda = $_POST['moeda'] ?? null;
 
-// Definir cotações fixas
-$cotacaoDolar = 5.60;
-$cotacaoEuro = 6.10;
-$cotacaoCad = 4.10;
+// Validar os dados usando a função
+$validacao = validarEntradas($valor, $moeda);
 
-// Verificar se o valor foi informado corretamente
-if ($valor === null || $valor <= 0 || $moeda === null || $moeda === '') {
-    echo "<p style='color:red; text-align:center;'>Por favor, insira um valor válido e selecione uma moeda.</p>";
+if ($validacao !== true) {
+    echo "<p style='color:red; text-align:center;'>$validacao</p>";
     echo "<p style='text-align:center;'><a href='index.html'>Voltar</a></p>";
     exit;
 }
+
+// Cotações fixas
+$cotacaoDolar = 5.60;
+$cotacaoEuro = 6.10;
+$cotacaoCad = 4.10;
 
 // Realizar a conversão
 switch ($moeda) {
@@ -35,7 +50,7 @@ switch ($moeda) {
         exit;
 }
 
-// Exibir resultado formatado
+// Exibir resultado
 echo "<div style='text-align:center; font-family:Arial; margin-top:50px;'>
         <h2>Resultado da Conversão</h2>
         <p>Valor em Reais: <strong>R$ " . number_format($valor, 2, ',', '.') . "</strong></p>
