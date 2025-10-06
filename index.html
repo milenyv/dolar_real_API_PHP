@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversor de Moedas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Conversor de Moedas</h1>
+
+    <form action="converter.php" method="POST">
+      <label for="valor">Valor em Real (R$):</label>
+      <input type="number" step="0.01" name="valor" id="valor" placeholder="Digite o valor" required>
+
+      <label for="moeda">Converter para:</label>
+      <select name="moeda" id="moeda" required>
+        <option value="">Selecione</option>
+        <option value="usd">Dólar (USD)</option>
+        <option value="eur">Euro (EUR)</option>
+        <option value="cad">Dólar Canadense (CAD)</option>
+      </select>
+
+      <button type="submit">Converter</button>
+    </form>
+
+    <div class="resultado">
+      <!-- Resultado da conversão aparecerá aqui -->
+    </div>
+  </div>
+</body>
+</html>
