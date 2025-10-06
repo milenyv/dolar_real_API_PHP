@@ -21,12 +21,19 @@ function exibirMensagem($mensagem, $tipo = "erro") {
     echo "</div>";
 }
 
-// Função que consome a API para pegar as cotações
+// ✅ Função que consome a API com cURL
 function buscarCotacoes() {
     $url = "https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,CAD-BRL";
-    $response = @file_get_contents($url);
 
-    if ($response === false) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    $response = curl_exec($ch);
+    $erro = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($erro)) {
         return false; // erro de conexão
     }
 
