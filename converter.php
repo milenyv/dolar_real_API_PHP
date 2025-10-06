@@ -15,8 +15,16 @@ function validarEntradas($valor, $moeda) {
 // Função para exibir mensagens
 function exibirMensagem($mensagem, $tipo = "erro") {
     $cor = $tipo === "erro" ? "red" : "green";
-    echo "<p style='color:{$cor}; text-align:center; font-weight:bold;'>{$mensagem}</p>";
-    echo "<p style='text-align:center;'><a href='index.html'>Voltar</a></p>";
+    echo "<div style='text-align:center; font-family:Arial; margin-top:50px;'>";
+    echo "<p style='color:{$cor}; font-weight:bold;'>{$mensagem}</p>";
+    echo "<p><a href='index.html'>Voltar</a></p>";
+    echo "</div>";
+}
+
+// Função para converter Real → Dólar
+function converterParaDolar($valor) {
+    $cotacaoDolar = 5.60;
+    return $valor / $cotacaoDolar;
 }
 
 // Receber dados do formulário
@@ -30,33 +38,33 @@ if ($validacao !== true) {
     exit;
 }
 
-// Cotações fixas
-$cotacaoDolar = 5.60;
-$cotacaoEuro = 6.10;
-$cotacaoCad = 4.10;
-
-// Realizar a conversão
+// Verificar a moeda e converter
 switch ($moeda) {
     case 'usd':
-        $resultado = $valor / $cotacaoDolar;
+        $resultado = converterParaDolar($valor);
         $nomeMoeda = "Dólar (USD)";
         break;
+
     case 'eur':
+        $cotacaoEuro = 6.10;
         $resultado = $valor / $cotacaoEuro;
         $nomeMoeda = "Euro (EUR)";
         break;
+
     case 'cad':
+        $cotacaoCad = 4.10;
         $resultado = $valor / $cotacaoCad;
         $nomeMoeda = "Dólar Canadense (CAD)";
         break;
+
     default:
         exibirMensagem("Moeda inválida!", "erro");
         exit;
 }
 
-// Exibir resultado com função de mensagem (tipo sucesso)
+// Exibir resultado
 exibirMensagem(
-    "Valor em Reais: <strong>R$ " . number_format($valor, 2, ',', '.') . 
+    "Valor em Reais: <strong>R$ " . number_format($valor, 2, ',', '.') .
     "</strong><br>Valor em {$nomeMoeda}: <strong>" . number_format($resultado, 2, ',', '.') . "</strong>",
     "sucesso"
 );
