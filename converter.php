@@ -1,5 +1,5 @@
 <?php
-// Função para validar entradas do usuário
+// Função para validar entradas
 function validarEntradas($valor, $moeda) {
     if ($valor === null || $valor === '' || !is_numeric($valor) || $valor <= 0) {
         return "Por favor, insira um valor em reais válido.";
@@ -9,19 +9,24 @@ function validarEntradas($valor, $moeda) {
         return "Por favor, selecione uma moeda para conversão.";
     }
 
-    return true; // Tudo certo!
+    return true;
+}
+
+// Função para exibir mensagens
+function exibirMensagem($mensagem, $tipo = "erro") {
+    $cor = $tipo === "erro" ? "red" : "green";
+    echo "<p style='color:{$cor}; text-align:center; font-weight:bold;'>{$mensagem}</p>";
+    echo "<p style='text-align:center;'><a href='index.html'>Voltar</a></p>";
 }
 
 // Receber dados do formulário
 $valor = $_POST['valor'] ?? null;
 $moeda = $_POST['moeda'] ?? null;
 
-// Validar os dados usando a função
+// Validar entradas
 $validacao = validarEntradas($valor, $moeda);
-
 if ($validacao !== true) {
-    echo "<p style='color:red; text-align:center;'>$validacao</p>";
-    echo "<p style='text-align:center;'><a href='index.html'>Voltar</a></p>";
+    exibirMensagem($validacao, "erro");
     exit;
 }
 
@@ -45,16 +50,14 @@ switch ($moeda) {
         $nomeMoeda = "Dólar Canadense (CAD)";
         break;
     default:
-        echo "<p style='color:red; text-align:center;'>Moeda inválida!</p>";
-        echo "<p style='text-align:center;'><a href='index.html'>Voltar</a></p>";
+        exibirMensagem("Moeda inválida!", "erro");
         exit;
 }
 
-// Exibir resultado
-echo "<div style='text-align:center; font-family:Arial; margin-top:50px;'>
-        <h2>Resultado da Conversão</h2>
-        <p>Valor em Reais: <strong>R$ " . number_format($valor, 2, ',', '.') . "</strong></p>
-        <p>Valor em {$nomeMoeda}: <strong>" . number_format($resultado, 2, ',', '.') . "</strong></p>
-        <a href='index.html' style='display:inline-block; margin-top:20px;'>Voltar</a>
-      </div>";
+// Exibir resultado com função de mensagem (tipo sucesso)
+exibirMensagem(
+    "Valor em Reais: <strong>R$ " . number_format($valor, 2, ',', '.') . 
+    "</strong><br>Valor em {$nomeMoeda}: <strong>" . number_format($resultado, 2, ',', '.') . "</strong>",
+    "sucesso"
+);
 ?>
