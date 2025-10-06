@@ -33,6 +33,12 @@ function converterParaEuro($valor) {
     return $valor / $cotacaoEuro;
 }
 
+// Função para converter Real → Dólar Canadense
+function converterParaDolarCanadense($valor) {
+    $cotacaoCad = 4.10;
+    return $valor / $cotacaoCad;
+}
+
 // Receber dados do formulário
 $valor = $_POST['valor'] ?? null;
 $moeda = $_POST['moeda'] ?? null;
@@ -44,7 +50,7 @@ if ($validacao !== true) {
     exit;
 }
 
-// Verificar a moeda e converter
+// Escolher a função correta para cada moeda
 switch ($moeda) {
     case 'usd':
         $resultado = converterParaDolar($valor);
@@ -57,8 +63,7 @@ switch ($moeda) {
         break;
 
     case 'cad':
-        $cotacaoCad = 4.10;
-        $resultado = $valor / $cotacaoCad;
+        $resultado = converterParaDolarCanadense($valor);
         $nomeMoeda = "Dólar Canadense (CAD)";
         break;
 
